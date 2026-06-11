@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MASTERDEX ULTRA V1.1.2</title>
+  <title>MASTERDEX ULTRA V1.1.3</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -109,10 +109,22 @@
     body.monochrome .type-badge, body.monochrome .mini-type, body.monochrome .stat-bar-fill { background: #888 !important; filter: grayscale(100%); }
     body.monochrome #main-card, body.monochrome #search-container, body.monochrome .colored-card { --card-bg: transparent !important; }
 
-    /* DETAILS MODAL CSS */
-    #details-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
-    #details-modal.show-modal { display: flex; opacity: 1; }
-    .details-content { width: 94%; max-width: 850px; padding: clamp(25px, 6vw, 40px) clamp(15px, 4vw, 40px); overflow: visible; max-height: 90vh; overflow-y: auto; }
+    /* =========================================
+       CORREÇÃO DO BUG DOS MODAIS ABERTOS (CSS)
+       ========================================= */
+    .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+    .modal.show-modal { display: flex; opacity: 1; }
+    .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); cursor: pointer; }
+    .modal-content { position: relative; z-index: 10001; background: var(--glass-panel); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 24px; width: 90%; max-width: 500px; padding: 25px; max-height: 85vh; overflow-y: auto; box-shadow: var(--glass-shadow); display: flex; flex-direction: column; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+    .modal-title { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 900; margin: 0; color: var(--text-main); text-transform: uppercase; letter-spacing: 1px; }
+    .close-btn { background: var(--glass-panel); border: 1px solid var(--glass-border); color: var(--text-main); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; transition: all 0.2s ease; font-size: 18px; }
+    .close-btn:hover { background: #ff4757; color: white; border-color: #ff4757; transform: scale(1.1); }
+
+    /* OVERRIDES ESPECÍFICOS DOS MODAIS CUSTOMIZADOS */
+    #details-modal .modal-content, #compare-modal .modal-content { max-width: 850px; }
+    .details-content { padding: clamp(25px, 6vw, 40px) clamp(15px, 4vw, 40px); overflow: visible; }
+    
     .dm-section { margin-bottom: 25px; background: rgba(0,0,0,0.03); padding: 15px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); }
     @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .dm-section { background: rgba(255,255,255,0.02); } }
     :root[data-theme="dark"] .dm-section { background: rgba(255,255,255,0.02); }
@@ -137,7 +149,6 @@
     .dm-encounters { font-size: 12px; line-height: 1.5; max-height: 120px; overflow-y: auto; padding-right: 5px; }
     .dm-enc-item { background: var(--glass-panel); padding: 6px 10px; border-radius: 8px; margin-bottom: 5px; display: inline-block; margin-right: 5px; font-weight: 600; border: 1px solid var(--glass-border); }
     
-    /* Make image clickable */
     #poke-image { cursor: pointer; }
 
     .glass-bg { position: absolute; top: 0; bottom: 0; left: 0; right: 0; border-radius: inherit; z-index: 0; pointer-events: none; }
@@ -145,10 +156,8 @@
     #search-container { position: fixed; top: clamp(10px, 2vw, 15px); left: 50%; transform: translateX(-50%); width: 96%; max-width: 1000px; z-index: 100; padding: clamp(10px, 3vw, 15px); border-radius: clamp(20px, 4vw, 25px); display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; border-right: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
     #search-container > *:not(.glass-bg) { position: relative; z-index: 1; }
     
-    /* FIX: Ensure autocomplete wrapper stays above sibling filters */
     #search-container > #input-wrapper { z-index: 9999; }
     
-    /* EFEITO DE BRILHO iOS 26 (GLOW) */
     #search-container::after, #main-card::after, .pokedex-card::after, .evo-card::after, .team-card::after {
       content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: inherit; background: var(--card-bg, var(--nav-bg)); filter: blur(20px); opacity: 0.2; z-index: -1; transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease; pointer-events: none;
     }
@@ -185,7 +194,7 @@
       select { flex: 1 1 80px; min-width: 80px; order: 2; padding: 14px 6px; font-size: 12px; }
       .btn-action { flex: 1 1 80px; min-width: 80px; order: 3; padding: 14px 8px; font-size: 11px; }
       .btn-nav { flex: 1 1 100px; min-width: 100px; order: 4; padding: 14px 10px; font-size: 11px; }
-      #compare-modal-content, .details-content { max-width: 1200px !important; padding: 50px 40px !important; }
+      #compare-modal .modal-content, #details-modal .modal-content { max-width: 1200px; padding: 50px 40px; }
     }
     
     @media (min-width: 1024px) {
@@ -208,7 +217,6 @@
     #poke-image { width: clamp(220px, 60vw, 360px); height: clamp(220px, 60vw, 360px); object-fit: contain; margin-top: -80px; z-index: 10; animation: float 6s ease-in-out infinite; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)); cursor: pointer; }
     .card-content { width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
     
-    /* DINÂMICA DE CORES DOS TÍTULOS */
     .name-wrapper { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 0; }
     #poke-name { font-family: 'Montserrat', sans-serif; font-size: clamp(28px, 7vw, 42px); font-weight: 900; text-transform: capitalize; margin: 0; letter-spacing: -1px; line-height: 1.1; color: var(--text-accent); transition: color 0.6s ease; }
     .cry-btn { background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 50%; width: 35px; height: 35px; font-size: 16px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; padding: 0; margin-bottom: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -224,7 +232,6 @@
     .header-badges { display: flex; gap: 10px; justify-content: center; align-items: center; margin: 12px 0 18px 0; flex-wrap: wrap; }
     #poke-id { font-family: 'Montserrat', sans-serif; background: var(--type-dark); padding: 6px 18px; border-radius: 15px; color: #fff; font-weight: 900; font-size: 14px; letter-spacing: 2px; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); transition: background 0.6s ease; }
     
-    /* Botões de Ação Originais + Novos do Living Dex/Team */
     .action-btn { background: var(--glass-panel); font-family: 'Montserrat', sans-serif; font-weight: 900; padding: 6px 12px; border-radius: 15px; font-size: 11px; color: var(--text-main); border: 1px solid var(--glass-border); box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 1px; }
     .action-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
     .action-btn:active { transform: scale(0.95); }
@@ -282,7 +289,6 @@
     .cap-value { font-size: 14px; font-weight: 800; }
     .dmg-types { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; width: 100%; }
     
-    /* MODAL SETTINGS Toggles */
     .setting-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; background: rgba(0,0,0,0.05); padding: 10px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
     @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .setting-item { background: rgba(255,255,255,0.03); } }
     :root[data-theme="dark"] .setting-item { background: rgba(255,255,255,0.03); }
@@ -299,7 +305,6 @@
       #main-card { display: grid; grid-template-columns: 45% 1fr; grid-template-rows: auto auto; column-gap: 40px; row-gap: 30px; padding: 50px 40px; max-width: 1000px; margin-top: 20px; }
       .img-container { width: 100%; grid-column: 1; grid-row: 1; position: relative; top: auto;  }
       
-      /* ALINHAMENTO CORRIGIDO */
       .extra-info-container { width: 100%; grid-column: 1; grid-row: 2; margin-top: 0; align-self: end; }
       
       #poke-image { margin-top: -40px; width: 100%; max-width: none; height: auto; object-fit: contain; }
@@ -316,7 +321,6 @@
       .grid-container { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
     }
 
-    /* Modal Details Split */
     .dm-split-row { display: flex; flex-direction: column; }
     .repro-grid { display: flex !important; flex-direction: column; }
     .train-grid { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 10px; }
@@ -460,9 +464,9 @@
     </div>
   </div>
 
-  <div id="compare-modal" class="modal" style="align-items: flex-start; overflow-y: auto; padding: 40px 0;">
+  <div id="compare-modal" class="modal">
     <div class="modal-overlay" onclick="closeModal('compare-modal')"></div>
-    <div class="modal-content" style="margin: auto; max-height: none;">
+    <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title">Comparador</h3>
         <button class="close-btn" onclick="closeModal('compare-modal')">×</button>
@@ -509,7 +513,7 @@
     </div>
   </div>
 
-  <div id="info-modal" class="modal" style="z-index: 10005;">
+  <div id="info-modal" class="modal">
     <div class="modal-overlay" onclick="closeModal('info-modal')"></div>
     <div class="modal-content" style="max-width: 400px; padding: 20px;">
       <div class="modal-header" style="margin-bottom: 15px; padding-bottom: 10px;">
@@ -517,15 +521,6 @@
         <button class="close-btn" onclick="closeModal('info-modal')">×</button>
       </div>
       <div id="im-content" style="font-size: 13px; line-height: 1.6;">Carregando...</div>
-    </div>
-  </div>
-
-  <div id="image-viewer-modal" class="modal" style="z-index: 20000;">
-    <div class="viewer-overlay" onclick="closeModal('image-viewer-modal')"></div>
-    <div class="viewer-content">
-      <button class="viewer-close" onclick="closeModal('image-viewer-modal')">×</button>
-      <img id="viewer-img" class="viewer-img" src="" alt="Ampliado">
-      <div id="viewer-label" class="viewer-label"></div>
     </div>
   </div>
 
