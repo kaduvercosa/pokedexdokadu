@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MASTERDEX ULTRA V1.1</title>
+  <title>MASTERDEX ULTRA V1.1.2</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -372,6 +372,13 @@
       <option value="steel">Aço</option><option value="fairy">Fada</option>
     </select>
 
+    <select id="rarity-filter" onchange="handleFilter(this.value, 'rarity')">
+      <option value="">Raridade...</option>
+      <option value="legendary">Lendários</option>
+      <option value="mythical">Míticos</option>
+      <option value="baby">Bebês</option>
+    </select>
+
     <button onclick="openModal('team-modal')" class="btn-action">🛡️ Equipe</button>
     <button onclick="sortearPokemon()" class="btn-action">🎲 Sortear</button>
     <button onclick="openModal('settings-modal')" class="btn-action">⚙️ Config.</button>
@@ -678,7 +685,6 @@
 
   <script src="js/utils.js"></script>
   <script>
-    // Utils & Constants (Mantidas originais)
     const typeMap = { normal: 'Normal', fire: 'Fogo', water: 'Água', electric: 'Elétrico', grass: 'Grama', ice: 'Gelo', fighting: 'Lutador', poison: 'Venenoso', ground: 'Terrestre', flying: 'Voador', psychic: 'Psíquico', bug: 'Inseto', rock: 'Pedra', ghost: 'Fantasma', dragon: 'Dragão', dark: 'Sombrio', steel: 'Aço', fairy: 'Fada' };
     const typeColors = { normal: '#9FA19F', fire: '#F45C19', water: '#3A8DE9', electric: '#F2D335', grass: '#53BA4E', ice: '#6CD4D0', fighting: '#CE426B', poison: '#AA6BC8', ground: '#D97944', flying: '#91A8E1', psychic: '#FB8886', bug: '#90C12B', rock: '#C6B78B', ghost: '#5269AD', dragon: '#0B6DC4', dark: '#5A5465', steel: '#5A8FA3', fairy: '#EC8FE6' };
     const statMap = { hp: 'HP', attack: 'ATQ', defense: 'DEF', 'special-attack': 'ATQ.E', 'special-defense': 'DEF.E', speed: 'VEL' };
@@ -690,7 +696,6 @@
         baby: ["172","173","174","175","236","237","238","239","240","298","360","406","433","438","439","440","446","447","458","848"]
     };
 
-    // Caso o script externo falhe, injeto as funções baseadas do Utils originais para garantir
     function shadeColor(color, percent) {
         var R = parseInt(color.substring(1,3),16), G = parseInt(color.substring(3,5),16), B = parseInt(color.substring(5,7),16);
         R = parseInt(R * (100 + percent) / 100); G = parseInt(G * (100 + percent) / 100); B = parseInt(B * (100 + percent) / 100);
@@ -719,7 +724,6 @@
 
     function getMainSpriteUrl(pokemonData, isShiny) {
         if (!pokemonData || !pokemonData.sprites) return '';
-        
         if (spriteStyle === 'animated') {
             return isShiny ? 
                 (pokemonData.sprites.other?.showdown?.front_shiny || pokemonData.sprites.front_shiny) : 
@@ -731,11 +735,9 @@
         }
     }
 
-    // Modal Control Universal
     function openModal(id) { document.getElementById(id).classList.add('show-modal'); }
     function closeModal(id) { document.getElementById(id).classList.remove('show-modal'); }
 
-    // Close modais with ESC key
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             const modals = ['image-viewer-modal', 'info-modal', 'compare-modal', 'team-modal', 'details-modal', 'settings-modal'];
@@ -744,7 +746,7 @@
     });
 
     let allPokemonList = [];
-    let currentDisplayedList = []; // Para ordenação na lista principal
+    let currentDisplayedList = []; 
     let currentMode = 'detail';
     let isShinyView = false;
     let currentPokemonData = null;
@@ -770,7 +772,6 @@
     }
     window.addEventListener('load', loadAllPokemon);
 
-    // Audio / Cry
     function playCry() {
         if(currentPokemonData && currentPokemonData.cries && currentPokemonData.cries.latest) {
             let btn = document.getElementById('poke-cry-btn');
@@ -782,7 +783,6 @@
         }
     }
 
-    // Toggle Botões Living Dex e Team Builder
     function toggleState(type) {
         if (!currentPokemonData) return;
         const id = currentPokemonData.id.toString();
@@ -808,7 +808,6 @@
         
         localStorage.setItem(`pokedex-${type === 'fav' ? 'favorites' : (type === 'caught' ? 'caught' : 'team')}`, JSON.stringify(arr));
         
-        // Refresh grid if filtering
         let currentFilter = document.getElementById('dex-filter').value;
         if(currentMode === 'list' && ((type==='fav' && currentFilter==='favorites') || (type==='caught' && (currentFilter==='caught' || currentFilter==='uncaught')))) {
             handleFilter(currentFilter, 'dex');
@@ -827,7 +826,6 @@
         if(teamList.includes(sid)) { tBtn.classList.add('is-team'); tBtn.innerHTML='➖ EQUIPE'; } else { tBtn.classList.remove('is-team'); tBtn.innerHTML='➕ EQUIPE'; }
     }
 
-    // Exportação e Importação de Save State
     function gerarCodigoExportacao() {
         let save = { fav: favorites, caught: caughtList, team: teamList };
         let str = btoa(JSON.stringify(save));
@@ -854,7 +852,6 @@
         } catch(e) { alert("❌ Código inválido ou corrompido."); }
     }
 
-    // Modal Equipe & Analysis
     async function openTeamModal() {
         openModal('team-modal');
         const grid = document.getElementById('team-grid'); grid.innerHTML = 'Carregando equipe...';
@@ -884,7 +881,7 @@
                     teamList.splice(teamList.indexOf(id.toString()), 1);
                     localStorage.setItem('pokedex-team', JSON.stringify(teamList));
                     if(currentPokemonData && currentPokemonData.id.toString() === id.toString()) updateStateButtons(id);
-                    openTeamModal(); // reload modal
+                    openTeamModal(); 
                 };
                 div.appendChild(rm);
                 grid.appendChild(div);
@@ -1054,7 +1051,9 @@
       if(filterType !== 'dex') document.getElementById('dex-filter').value = '';
       if(filterType !== 'gen') document.getElementById('gen-filter').value = '';
       if(filterType !== 'type') document.getElementById('type-filter').value = '';
-      if(filterType !== 'rarity') document.getElementById('rarity-filter').value = '';
+      
+      let raritySelect = document.getElementById('rarity-filter');
+      if(filterType !== 'rarity' && raritySelect) raritySelect.value = '';
       
       try {
         let list = [];
@@ -1083,7 +1082,6 @@
       }
     }
 
-    // Grid rendering logic with sorting
     function renderPokedexGrid() {
         const grid = document.getElementById('pokedex-grid');
         grid.innerHTML = '';
@@ -1094,7 +1092,8 @@
             return;
         }
 
-        const sortBy = document.getElementById('sort-filter') ? document.getElementById('sort-filter').value : 'id-asc';
+        const sortFilter = document.getElementById('sort-filter');
+        const sortBy = sortFilter ? sortFilter.value : 'id-asc';
         let listToSort = [...currentDisplayedList];
 
         listToSort.sort((a, b) => {
@@ -1104,7 +1103,7 @@
             if (sortBy === 'az') return a.name.localeCompare(b.name);
             else if (sortBy === 'za') return b.name.localeCompare(a.name);
             else if (sortBy === 'id-desc') return idB - idA;
-            else return idA - idB; // 'id-asc'
+            else return idA - idB; 
         });
 
         listToSort.forEach(p => {
@@ -1123,7 +1122,6 @@
            `;
            grid.appendChild(div);
            
-           // Fetch type colors asynchronously
            fetch('https://pokeapi.co/api/v2/pokemon/' + id).then(r => r.json()).then(pData => {
                const pType = pData.types[0].type.name;
                let bgColor = typeColors[pType] || '#777';
@@ -1147,18 +1145,28 @@
         setTimeout(adjustSpacer, 100);
     }
     
-    // Sortear Ação consertada
     function sortearPokemon() { 
       document.getElementById('autocomplete-list').style.display = 'none'; 
       if(currentMode === 'list') toggleView(); 
       document.getElementById('search-input').value = ''; 
       fetchPokemon(Math.floor(Math.random() * 1025) + 1); 
     }
-    document.getElementById('search-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') { sortearPokemon(); } });
 
-    // Chart Settings
+    document.getElementById('search-input').addEventListener('keypress', (e) => { 
+      if (e.key === 'Enter') { 
+        e.preventDefault();
+        const val = e.target.value.trim();
+        document.getElementById('autocomplete-list').style.display = 'none';
+        if (currentMode === 'list') toggleView();
+        
+        if (val) fetchPokemon(val);
+        else sortearPokemon(); 
+      } 
+    });
+
     function renderStats(statsArray, color) {
-        const type = document.getElementById('setting-chart') ? document.getElementById('setting-chart').value : 'bar';
+        const chartSelect = document.getElementById('setting-chart');
+        const type = chartSelect ? chartSelect.value : 'bar';
         const bars = document.getElementById('stats-list');
         const radar = document.getElementById('stats-radar');
         
@@ -1245,7 +1253,6 @@
         updatePokemonUI(data);
         document.getElementById('poke-exp').innerText = data.base_experience ? data.base_experience : 'N/A';
 
-        // LÓGICA DE TRADUÇÃO RESTAURADA INTACTA
         let itemsArr = data.held_items.length > 0 ? data.held_items.map(i => i.item.name.replace(/-/g, ' ')) : [];
         let abilitiesArr = data.abilities.map(a => a.ability.name.replace(/-/g, ' '));
         let movesArr = data.moves.slice(0, 40).map(m => m.move.name.replace(/-/g, ' '));
@@ -1338,8 +1345,12 @@
            
            document.getElementById('poke-gen').innerText = genMap[speciesData.generation.name] || 'Desc.';
            
-           // EVOLUÇÕES E FORMAS RESTAURADAS INTACTAS
-           fetchEvolutions(speciesData.evolution_chain.url);
+           if (speciesData.evolution_chain && speciesData.evolution_chain.url) {
+               fetchEvolutions(speciesData.evolution_chain.url);
+           } else {
+               document.getElementById('evolutions').style.display = 'none';
+               document.getElementById('evo-list').innerHTML = '';
+           }
            
            const varDiv = document.getElementById('varieties'); const varList = document.getElementById('varieties-list'); varList.innerHTML = '';
            const altForms = speciesData.varieties.filter(v => !v.is_default);
@@ -1373,7 +1384,6 @@
       }
     }
     
-    // Core Types Logic
     async function getDamageRelations(typeName) {
         if (typeDamageCache[typeName]) return typeDamageCache[typeName];
         const res = await fetch(`https://pokeapi.co/api/v2/type/${typeName}`);
@@ -1429,7 +1439,6 @@
         return typeDamage;
     }
     
-    // EVOLUÇÕES COMPLEXAS RESTAURADAS INTACTAS
     async function fetchEvolutions(url) {
       try {
         const evoRes = await fetch(url); const evoData = await evoRes.json(); let evolutions = [];
@@ -1492,7 +1501,6 @@
       } catch (e) { console.error("Error fetching evolutions:", e); }
     }
 
-    // Modal Details Gallery
     function openDetailsModal() {
         if (!currentPokemonData || !currentSpeciesData) return;
         
@@ -1569,7 +1577,6 @@
         openModal('details-modal');
     }
 
-    // Modal Info (Abilities and Moves) RESTAURADAS INTACTAS
     async function fetchAbilityInfo(rawName, ptName) {
         document.getElementById('im-title').innerText = ptName + " (Habilidade)";
         const content = document.getElementById('im-content');
@@ -1632,7 +1639,6 @@
         }
     }
 
-    // Modal Compare with Advantage Calculator
     async function searchCompare() {
         const query = document.getElementById('compare-input').value.toLowerCase().trim().replace(/[^a-z0-9-]/g, '');
         if (!query) return;
@@ -1704,7 +1710,6 @@
             `;
             statsList.appendChild(totalRow);
 
-            // Advantage logic
             let advDiv = document.getElementById('comp-advantage'); advDiv.innerHTML = '';
             let dmg2to1 = await calculateMutualAdvantage(data2.types, data1.types);
             let dmg1to2 = await calculateMutualAdvantage(data1.types, data2.types);
@@ -1736,7 +1741,6 @@
         return maxMult;
     }
 
-    // Settings Loading & Saving (COMPLETAS RESTAURADAS)
     function saveSettings() {
       const settings = {
         spritestyle: document.getElementById('setting-spritestyle').value,
@@ -1842,7 +1846,6 @@
         }
     }
 
-    // Inicialização
     const urlId = new URLSearchParams(window.location.search).get('id') || new URLSearchParams(window.location.search).get('pokemonId') || (window.location.hash.includes('id=') ? window.location.hash.split('id=')[1].split('&')[0] : null);
     applySettings();
     if (urlId && urlId.trim() !== "" && urlId !== "null") {
