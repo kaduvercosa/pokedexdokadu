@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MASTERDEX ULTRA V1.1.4</title>
+  <title>MASTERDEX ULTRA v1.1.5</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -21,7 +21,7 @@
       --text-main: #1a1a2e; --text-muted: #4a4a5a;
       --btn-bg: rgba(255, 255, 255, 0.4); --stat-bg: rgba(0, 0, 0, 0.1);
     }
-    /* TEMA ESCURO (Automático e Forçado) */
+    /* TEMA ESCURO */
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
         --bg-overlay: rgba(10, 10, 15, 0.55);
@@ -43,12 +43,9 @@
       --btn-bg: rgba(255, 255, 255, 0.1) !important; --stat-bg: rgba(0, 0, 0, 0.4) !important;
     }
 
-    /* AJUSTE GLOW NO MODO CLARO */
+    /* GLOW NO CLARO */
     @media (prefers-color-scheme: light) {
-      :root {
-          --light-glow-saturate: 180%;
-          --light-glow-contrast: 130%;
-      }
+      :root { --light-glow-saturate: 180%; --light-glow-contrast: 130%; }
       #search-container::after, #main-card::after, .pokedex-card::after, .evo-card::after {
           backdrop-filter: blur(25px) saturate(var(--light-glow-saturate)) contrast(var(--light-glow-contrast));
           -webkit-backdrop-filter: blur(25px) saturate(var(--light-glow-saturate)) contrast(var(--light-glow-contrast));
@@ -61,79 +58,51 @@
     * { box-sizing: border-box; scrollbar-width: thin; scrollbar-color: var(--type-color) transparent; -webkit-tap-highlight-color: transparent; }
     
     html { background-color: var(--type-dark); transition: background-color 0.6s ease; }
-    
     body { margin: 0; padding: 0; background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), var(--bg-gradient); background-attachment: fixed; color: var(--text-main); font-family: 'Poppins', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; transition: background 0.6s ease, color 0.3s ease; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
     
     .liquid-glass { 
-      background: var(--glass-bg); 
-      backdrop-filter: blur(10px) saturate(100%) contrast(100%); 
-      -webkit-backdrop-filter: blur(10px) saturate(100%) contrast(100%); 
-      border: 1px solid rgba(255, 255, 255, 0.3); 
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4) inset, 0 0 0 1px rgba(255, 255, 255, 0.4), 0 8px 32px rgba(0, 0, 0, 0.25); 
+      background: var(--glass-bg); backdrop-filter: blur(10px) saturate(100%) contrast(100%); -webkit-backdrop-filter: blur(10px) saturate(100%) contrast(100%); border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4) inset, 0 0 0 1px rgba(255, 255, 255, 0.4), 0 8px 32px rgba(0, 0, 0, 0.25); 
     }
     
-    /* SETTINGS OVERRIDES */
+    /* OVERRIDES DE SETTINGS */
     body.no-glass .liquid-glass, body.no-glass .modal-content, body.no-glass #autocomplete-list { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: var(--glass-panel) !important; }
     body.no-glow #search-container::after, body.no-glow #main-card::after, body.no-glow .pokedex-card::after, body.no-glow .evo-card::after, body.no-glow .img-container::after { display: none !important; }
     body.no-anim * { animation: none !important; transition: none !important; }
-    
     body.hide-stats .stats-container { display: none !important; }
     body.hide-moves .moves-wrapper { display: none !important; }
     body.hide-extra #extra-info { display: none !important; }
     body.hide-evo #evolutions, body.hide-evo #varieties { display: none !important; }
 
-    /* FONT SIZES */
+    /* FONTES */
     body.font-small { font-size: 12px; }
-    body.font-small #poke-name { font-size: clamp(24px, 6vw, 36px); }
+    body.font-small #poke-name { font-size: clamp(20px, 5vw, 32px); }
     body.font-small .info-value { font-size: 12px; }
-    
     body.font-large { font-size: 16px; }
-    body.font-large #poke-name { font-size: clamp(32px, 8vw, 48px); }
+    body.font-large #poke-name { font-size: clamp(28px, 7vw, 42px); }
     body.font-large .info-value { font-size: 16px; }
     
-    /* MONOCHROME MODE */
-    body.monochrome {
-      --type-color: #888888 !important;
-      --type-dark: #333333 !important;
-      --nav-bg: #444444 !important;
-      --bg-gradient: linear-gradient(135deg, #dddddd 0%, #aaaaaa 100%) !important;
-      --text-accent: #555555 !important;
-    }
-    @media (prefers-color-scheme: dark) {
-      body.monochrome:not([data-theme="light"]), :root[data-theme="dark"] body.monochrome {
-        --bg-gradient: linear-gradient(135deg, #333333 0%, #111111 100%) !important;
-        --nav-bg: #222222 !important;
-        --text-accent: #aaaaaa !important;
-      }
-    }
+    /* MONOCROMÁTICO */
+    body.monochrome { --type-color: #888888 !important; --type-dark: #333333 !important; --nav-bg: #444444 !important; --bg-gradient: linear-gradient(135deg, #dddddd 0%, #aaaaaa 100%) !important; --text-accent: #555555 !important; }
+    @media (prefers-color-scheme: dark) { body.monochrome:not([data-theme="light"]), :root[data-theme="dark"] body.monochrome { --bg-gradient: linear-gradient(135deg, #333333 0%, #111111 100%) !important; --nav-bg: #222222 !important; --text-accent: #aaaaaa !important; } }
     body.monochrome .type-badge, body.monochrome .mini-type, body.monochrome .stat-bar-fill { background: #888 !important; filter: grayscale(100%); }
     body.monochrome #main-card, body.monochrome #search-container, body.monochrome .colored-card { --card-bg: transparent !important; }
 
-    /* =========================================
-       SISTEMA DE MODAIS CORRIGIDO E NATIVO 
-       ========================================= */
+    /* MODAIS NATIVOS CSS */
     .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; display: none; align-items: flex-start; justify-content: center; opacity: 0; transition: opacity 0.3s ease; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: clamp(20px, 4vh, 40px) 15px; }
     .modal.show-modal { display: flex; opacity: 1; }
-    
-    /* Overlay fixo para não rolar junto com o conteúdo */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); cursor: pointer; z-index: -1; }
-    
-    /* O margin: auto centraliza quando o conteúdo for pequeno, mas permite scroll quando for grande */
-    .modal-content { position: relative; z-index: 1; margin: auto; background: var(--glass-panel); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 24px; width: 100%; max-width: 500px; padding: clamp(20px, 5vw, 30px); box-shadow: var(--glass-shadow); display: flex; flex-direction: column; }
-    
+    .modal-content { position: relative; z-index: 1; margin: auto; background: var(--glass-panel); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 24px; width: 100%; max-width: 550px; padding: clamp(20px, 5vw, 30px); box-shadow: var(--glass-shadow); display: flex; flex-direction: column; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
     .modal-title { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 900; margin: 0; color: var(--text-main); text-transform: uppercase; letter-spacing: 1px; }
     .close-btn { background: var(--glass-panel); border: 1px solid var(--glass-border); color: var(--text-main); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; transition: all 0.2s ease; font-size: 18px; }
     .close-btn:hover { background: #ff4757; color: white; border-color: #ff4757; transform: scale(1.1); }
-
-    /* OVERRIDES ESPECÍFICOS DOS MODAIS */
-    #details-modal .modal-content, #compare-modal .modal-content { max-width: 850px; }
     
-    /* Image Viewer precisa ficar centralizado e sem scroll */
+    #details-modal .modal-content, #compare-modal .modal-content { max-width: 850px; }
+    #settings-modal .modal-content { max-width: 900px; } /* Ajuste pro Grid de Settings */
+    
     #image-viewer-modal { align-items: center; padding: 0; overflow: hidden; z-index: 20000; }
     #image-viewer-modal .modal-overlay { z-index: 20000; }
     
-    /* SEÇÕES INTERNAS DOS MODAIS */
     .dm-section { margin-bottom: 25px; background: rgba(0,0,0,0.03); padding: 15px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); }
     @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .dm-section { background: rgba(255,255,255,0.02); } }
     :root[data-theme="dark"] .dm-section { background: rgba(255,255,255,0.02); }
@@ -150,7 +119,6 @@
     .viewer-close { position: absolute; top: -50px; right: 0; background: var(--glass-panel); backdrop-filter: blur(10px) saturate(100%); -webkit-backdrop-filter: blur(10px) saturate(100%); border: 1px solid rgba(255,255,255,0.4); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #fff; cursor: pointer; font-size: 20px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255,255,255,0.2); }
     .viewer-close:hover { background: rgba(255, 71, 87, 0.8); transform: scale(1.1) rotate(90deg); border-color: rgba(255,255,255,0.6); box-shadow: 0 4px 20px rgba(255, 71, 87, 0.4); }
     .dm-sprite-label { font-size: 9px; font-weight: 800; text-transform: uppercase; margin-top: 5px; text-align: center; color: var(--text-muted); }
-    
     .dm-encounters { font-size: 12px; line-height: 1.5; max-height: 120px; overflow-y: auto; padding-right: 5px; }
     .dm-enc-item { background: var(--glass-panel); padding: 6px 10px; border-radius: 8px; margin-bottom: 5px; display: inline-block; margin-right: 5px; font-weight: 600; border: 1px solid var(--glass-border); }
     
@@ -158,15 +126,15 @@
 
     .glass-bg { position: absolute; top: 0; bottom: 0; left: 0; right: 0; border-radius: inherit; z-index: 0; pointer-events: none; }
     
-    #search-container { position: fixed; top: clamp(10px, 2vw, 15px); left: 50%; transform: translateX(-50%); width: 96%; max-width: 1000px; z-index: 100; padding: clamp(10px, 3vw, 15px); border-radius: clamp(20px, 4vw, 25px); display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; border-right: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    /* NAV BAR RESPONSIVA CORRIGIDA */
+    #search-container { position: fixed; top: clamp(10px, 2vw, 15px); left: 50%; transform: translateX(-50%); width: 96%; max-width: 1200px; z-index: 100; padding: clamp(10px, 3vw, 15px); border-radius: clamp(20px, 4vw, 25px); display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; border-right: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
     #search-container > *:not(.glass-bg) { position: relative; z-index: 1; }
-    
     #search-container > #input-wrapper { z-index: 9999; }
     
-    #search-container::after, #main-card::after, .pokedex-card::after, .evo-card::after, .team-card::after {
+    #search-container::after, #main-card::after, .pokedex-card::after, .evo-card::after, .team-card::after, .setting-card::after {
       content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: inherit; background: var(--card-bg, var(--nav-bg)); filter: blur(20px); opacity: 0.2; z-index: -1; transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease; pointer-events: none;
     }
-    #search-container:hover::after, .pokedex-card:hover::after, .evo-card:hover::after, .team-card:hover::after { opacity: 0.8; filter: blur(25px); transform: scale(1.1); }
+    #search-container:hover::after, .pokedex-card:hover::after, .evo-card:hover::after, .team-card:hover::after, .setting-card:hover::after { opacity: 0.8; filter: blur(25px); transform: scale(1.1); }
     .hide-nav { transform: translate(-50%, -150%) !important; opacity: 0; pointer-events: none; }
     
     #top-spacer { width: 100%; display: block; transition: height 0.3s ease; }
@@ -189,23 +157,21 @@
     .autocomplete-item:hover, .autocomplete-item:active { background: var(--nav-bg); color: #fff; }
     .ac-img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
     
-    select { flex: 1 1 calc(25% - 4px); min-width: calc(25% - 4px); order: 2; padding: 10px 4px; font-size: 11px; text-align: center; }
-    .btn-action { flex: 1 1 calc(25% - 4px); order: 3; padding: 12px 6px; font-size: 10px; }
+    /* Disposição Mobile */
+    select { flex: 1 1 calc(33% - 8px); min-width: calc(33% - 8px); order: 2; padding: 10px 4px; font-size: 10px; text-align: center; }
+    .btn-action { flex: 1 1 calc(33% - 8px); order: 3; padding: 12px 6px; font-size: 9px; }
     .btn-nav { flex: 1 1 100%; order: 4; padding: 12px 10px; font-size: 11px; }
     
+    /* Disposição iPad/Desktop Corrigida */
     @media (min-width: 768px) {
-      #search-container { flex-wrap: nowrap; gap: 10px; }
-      #input-wrapper { flex: 2 1 150px; min-width: 150px; order: 1; }
-      select { flex: 1 1 80px; min-width: 80px; order: 2; padding: 14px 6px; font-size: 12px; }
-      .btn-action { flex: 1 1 80px; min-width: 80px; order: 3; padding: 14px 8px; font-size: 11px; }
-      .btn-nav { flex: 1 1 100px; min-width: 100px; order: 4; padding: 14px 10px; font-size: 11px; }
-    }
-    
-    @media (min-width: 1024px) {
+      /* O flex-wrap: wrap se mantém, os items preenchem o espaço proporcionalmente */
       #input-wrapper { flex: 2 1 200px; min-width: 200px; }
-      select { flex: 1 1 100px; min-width: 100px; font-size: 13px; }
-      .btn-action { flex: 1 1 100px; min-width: 100px; font-size: 13px; }
-      .btn-nav { flex: 1 1 120px; min-width: 120px; font-size: 13px; }
+      select { flex: 1 1 110px; min-width: 110px; padding: 12px 6px; font-size: 12px; }
+      .btn-action { flex: 1 1 100px; min-width: 100px; padding: 12px 8px; font-size: 11px; }
+      .btn-nav { flex: 1 1 100%; min-width: 100%; padding: 14px 10px; font-size: 13px; margin-top: 5px; }
+    }
+    @media (min-width: 1024px) {
+      .btn-nav { flex: 1 1 150px; min-width: 150px; margin-top: 0; } /* Entra na mesma linha no PC */
     }
     
     #content-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; transition: opacity 0.3s ease; }
@@ -213,7 +179,7 @@
     .view-section { display: none; width: 100%; flex-direction: column; align-items: center; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
     .active-view { display: flex !important; }
     
-    #main-card { position: relative; border-radius: clamp(30px, 5vw, 45px); padding: clamp(25px, 6vw, 40px) clamp(15px, 4vw, 40px); width: 94%; max-width: 850px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+    #main-card { position: relative; border-radius: clamp(30px, 5vw, 45px); padding: clamp(25px, 6vw, 40px) clamp(15px, 4vw, 40px); width: 94%; max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
     #main-card > *:not(.glass-bg) { position: relative; z-index: 1; }
     .img-container { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .img-container::after { content: ''; position: absolute; width: clamp(180px, 50vw, 280px); height: clamp(180px, 50vw, 280px); background: var(--type-color, var(--card-bg)); filter: blur(35px); opacity: 0; border-radius: 50%; z-index: 1; transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; }
@@ -221,8 +187,13 @@
     #poke-image { width: clamp(220px, 60vw, 360px); height: clamp(220px, 60vw, 360px); object-fit: contain; margin-top: -80px; z-index: 10; animation: float 6s ease-in-out infinite; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)); cursor: pointer; }
     .card-content { width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
     
-    .name-wrapper { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 0; }
-    #poke-name { font-family: 'Montserrat', sans-serif; font-size: clamp(28px, 7vw, 42px); font-weight: 900; text-transform: capitalize; margin: 0; letter-spacing: -1px; line-height: 1.1; color: var(--text-accent); transition: color 0.6s ease; }
+    /* NAV ARROWS (Novo) */
+    .name-wrapper { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 0; width: 100%; }
+    .nav-arrow { background: var(--glass-panel); border: 1px solid var(--glass-border); color: var(--text-main); border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 0; }
+    .nav-arrow:hover { background: var(--type-color); color: white; transform: scale(1.1); }
+    
+    .name-box { display: flex; align-items: center; gap: 10px; justify-content: center; }
+    #poke-name { font-family: 'Montserrat', sans-serif; font-size: clamp(24px, 6vw, 38px); font-weight: 900; text-transform: capitalize; margin: 0; letter-spacing: -1px; line-height: 1.1; color: var(--text-accent); transition: color 0.6s ease; }
     .cry-btn { background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 50%; width: 35px; height: 35px; font-size: 16px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; padding: 0; margin-bottom: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     .cry-btn:hover { background: var(--type-color); color: white; transform: scale(1.1); }
 
@@ -231,12 +202,21 @@
     .stat-name { width: 70px; font-weight: 900; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; color: var(--text-accent); transition: color 0.6s ease; }
     .extra-title { font-size: 11px; color: var(--text-accent); text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 900; margin-bottom: 15px; letter-spacing: 1px; text-shadow: 0 1px 2px rgba(0,0,0,0.1); text-align: center; transition: color 0.6s ease; }
     .cap-label { font-size: 10px; color: var(--text-accent); text-transform: uppercase; font-weight: 900; margin-bottom: 2px; letter-spacing: 1px; transition: color 0.6s ease; }
-    .setting-group h4 { margin: 0 0 15px 0; font-size: 12px; color: var(--text-accent); text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.9; transition: color 0.6s ease; }
+    
+    /* Configurações Refeitas (Settings Grid) */
+    .settings-grid { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; }
+    .setting-card { position: relative; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+    .setting-card > *:not(.glass-bg) { position: relative; z-index: 1; }
+    .setting-card h4 { font-size: 12px; color: var(--text-accent); text-transform: uppercase; letter-spacing: 1.5px; font-family: 'Montserrat', sans-serif; font-weight: 900; margin: 0 0 5px 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+    .setting-item { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.03); padding: 10px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .setting-item { background: rgba(255,255,255,0.02); } }
+    :root[data-theme="dark"] .setting-item { background: rgba(255,255,255,0.02); }
+    .setting-label { font-size: 12px; font-weight: 600; color: var(--text-main); }
     
     .header-badges { display: flex; gap: 10px; justify-content: center; align-items: center; margin: 12px 0 18px 0; flex-wrap: wrap; }
     #poke-id { font-family: 'Montserrat', sans-serif; background: var(--type-dark); padding: 6px 18px; border-radius: 15px; color: #fff; font-weight: 900; font-size: 14px; letter-spacing: 2px; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); transition: background 0.6s ease; }
     
-    .action-btn { background: var(--glass-panel); font-family: 'Montserrat', sans-serif; font-weight: 900; padding: 6px 12px; border-radius: 15px; font-size: 11px; color: var(--text-main); border: 1px solid var(--glass-border); box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 1px; }
+    .action-btn { background: var(--glass-panel); font-family: 'Montserrat', sans-serif; font-weight: 900; padding: 6px 12px; border-radius: 15px; font-size: 11px; color: var(--text-main); border: 1px solid var(--glass-border); box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
     .action-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
     .action-btn:active { transform: scale(0.95); }
     .is-fav { background: #ff4757 !important; color: white !important; border-color: #ff4757 !important; }
@@ -293,10 +273,6 @@
     .cap-value { font-size: 14px; font-weight: 800; }
     .dmg-types { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; width: 100%; }
     
-    .setting-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; background: rgba(0,0,0,0.05); padding: 10px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
-    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .setting-item { background: rgba(255,255,255,0.03); } }
-    :root[data-theme="dark"] .setting-item { background: rgba(255,255,255,0.03); }
-    .setting-label { font-size: 13px; font-weight: 600; color: var(--text-main); }
     .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
     .switch input { opacity: 0; width: 0; height: 0; }
     .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.2); transition: .4s; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); }
@@ -305,13 +281,14 @@
     input:checked + .slider:before { transform: translateX(20px); }
     .modal-select { padding: 6px 12px; font-size: 12px; }
 
+    /* LAYOUT DESKTOP CORRIGIDO */
     @media (min-width: 768px) {
       #main-card { display: grid; grid-template-columns: 45% 1fr; grid-template-rows: auto auto; column-gap: 40px; row-gap: 30px; padding: 50px 40px; max-width: 1000px; margin-top: 20px; }
       .img-container { width: 100%; grid-column: 1; grid-row: 1; position: relative; top: auto;  }
       
-      .extra-info-container { width: 100%; grid-column: 1; grid-row: 2; margin-top: 0; align-self: end; }
+      .extra-info-container { width: 100%; grid-column: 1; grid-row: 2; margin-top: 0; align-self: start; } /* Ajustado de 'end' para 'start' para melhor fluidez */
       
-      #poke-image { margin-top: -40px; width: 100%; max-width: none; height: auto; object-fit: contain; }
+      #poke-image { margin-top: -20px; width: 100%; max-width: 380px; height: auto; object-fit: contain; }
       .card-content { width: 100%; grid-column: 2; grid-row: 1 / span 2; align-items: flex-start; text-align: left; }
       
       .name-wrapper { justify-content: flex-start; }
@@ -323,6 +300,9 @@
       .info-grid { grid-template-columns: repeat(3, 1fr); }
       .full-width { grid-column: span 3; }
       .grid-container { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+      
+      /* Grid de Settings no PC fica em 2 colunas */
+      .settings-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     .dm-split-row { display: flex; flex-direction: column; }
@@ -346,7 +326,7 @@
   <div id="search-container">
     <div class="glass-bg liquid-glass"></div>
     <div id="input-wrapper">
-      <input type="text" id="search-input" placeholder="Nome, ID..." autocomplete="off">
+      <input type="text" id="search-input" placeholder="Buscar Nome ou ID..." autocomplete="off">
       <div id="autocomplete-list"></div>
     </div>
     
@@ -392,7 +372,9 @@
     <button onclick="openModal('settings-modal')" class="btn-action">⚙️ Config.</button>
     <button onclick="toggleView()" id="nav-btn" class="btn-nav">VER POKÉDEX</button>
   </div>
+  
   <div id="top-spacer"></div>
+  
   <div id="content-wrapper">
     <div id="detail-view" class="view-section active-view">
       <div id="main-card">
@@ -402,9 +384,14 @@
         </div>
         <div class="card-content">
           <div class="name-wrapper">
-            <div id="poke-name">Carregando...</div>
-            <button id="poke-cry-btn" class="cry-btn" onclick="playCry()">🔊</button>
+            <button class="nav-arrow" onclick="navigatePoke(-1)" title="Pokémon Anterior">❮</button>
+            <div class="name-box">
+              <div id="poke-name">Carregando...</div>
+              <button id="poke-cry-btn" class="cry-btn" onclick="playCry()">🔊</button>
+            </div>
+            <button class="nav-arrow" onclick="navigatePoke(1)" title="Próximo Pokémon">❯</button>
           </div>
+          
           <div class="header-badges">
             <div id="poke-id"></div>
             <button id="poke-shiny-btn" class="action-btn" onclick="toggleShiny()">✨ SHINY</button>
@@ -475,14 +462,12 @@
         <h3 class="modal-title">Comparador</h3>
         <button class="close-btn" onclick="closeModal('compare-modal')">×</button>
       </div>
-      
       <div style="display:flex; gap:10px; margin-bottom: 20px; position:relative; z-index:10006;">
           <div style="flex:1; position:relative;">
               <input type="text" id="compare-input" placeholder="Buscar 2º Pokémon..." style="width:100%; padding: 14px 20px; font-size:16px;" autocomplete="off">
               <div id="compare-autocomplete" style="position:absolute; top:100%; left:0; right:0; margin-top:5px; max-height:240px; overflow-y:auto; background:var(--glass-panel); backdrop-filter:blur(20px); border:1px solid var(--glass-border); border-radius:16px; display:none; flex-direction:column; z-index:10007; padding:8px; box-shadow:0 15px 35px rgba(0,0,0,0.4);"></div>
           </div>
       </div>
-      
       <div id="compare-results" style="display:none; flex-direction:column; gap:15px;">
           <div style="display:flex; justify-content:space-between; align-items:flex-end;">
               <div id="comp-poke1" style="text-align:center; flex:1;">
@@ -530,17 +515,15 @@
 
   <div id="details-modal" class="modal">
     <div class="modal-overlay" onclick="closeModal('details-modal')"></div>
-    <div class="modal-content">
+    <div class="modal-content details-content">
       <div class="modal-header">
         <h3 class="modal-title" id="dm-title">Detalhes do Pokémon</h3>
         <button class="close-btn" onclick="closeModal('details-modal')">×</button>
       </div>
-      
       <div class="dm-section">
         <h4 class="dm-subtitle">Galeria de Sprites</h4>
         <div class="dm-gallery" id="dm-gallery"></div>
       </div>
-
       <div class="dm-split-row">
         <div class="dm-section">
           <h4 class="dm-subtitle">Reprodução (Breeding)</h4>
@@ -550,7 +533,6 @@
             <div class="info-box repro-full"><span class="info-label">Grupos de Ovos</span><span class="info-value" id="dm-egggroups">-</span></div>
           </div>
         </div>
-
         <div class="dm-section">
           <h4 class="dm-subtitle">Treinamento</h4>
           <div class="info-grid train-grid">
@@ -561,7 +543,6 @@
           </div>
         </div>
       </div>
-
       <div class="dm-section">
         <h4 class="dm-subtitle">Localizações de Encontro</h4>
         <div class="dm-encounters" id="dm-encounters">Carregando...</div>
@@ -577,102 +558,72 @@
         <button class="close-btn" onclick="closeModal('settings-modal')">×</button>
       </div>
       
-      <div class="setting-group">
-        <h4>Sincronização / Nuvem (Save State)</h4>
-        <div style="background: rgba(255, 165, 2, 0.1); border: 1px solid #ffa502; padding: 12px; border-radius: 12px; margin-bottom: 15px; font-size: 11px; line-height: 1.5;">
-            Para passar seus Favoritos, Equipe e Capturados para o celular, clique em Exportar, copie o código e Cole aqui no outro dispositivo clicando em Importar.
-        </div>
-        <button onclick="gerarCodigoExportacao()" class="action-btn" style="width:100%; margin-bottom:10px; background:var(--type-color); color:#fff; border:none; padding:12px;">📤 EXPORTAR CÓDIGO (COPIAR)</button>
-        <textarea id="sync-code-area" placeholder="Cole o código do outro dispositivo aqui..." style="width: 100%; padding: 10px; font-size: 10px; height: 60px; margin-bottom: 10px; resize: none;"></textarea>
-        <button onclick="importarCodigo()" class="action-btn" style="width:100%; margin-bottom:15px; background:var(--type-dark); color:#fff; border:none; padding:12px;">📥 IMPORTAR DADOS</button>
-      </div>
+      <div class="settings-grid">
+          
+          <div class="setting-card">
+            <div class="glass-bg liquid-glass"></div>
+            <h4>Nuven & Sincronização</h4>
+            <div style="font-size: 11px; line-height: 1.4; opacity: 0.8; margin-bottom: 10px;">Exporte e Importe seus Favoritos, Equipe e Capturados.</div>
+            <textarea id="sync-code-area" placeholder="Cole o código do outro dispositivo aqui..." style="width: 100%; padding: 10px; font-size: 10px; height: 60px; margin-bottom: 10px; resize: none;"></textarea>
+            <div style="display:flex; gap:10px;">
+                <button onclick="gerarCodigoExportacao()" class="action-btn" style="flex:1; background:var(--type-color); color:#fff; border:none; padding:10px;">📤 EXPORTAR</button>
+                <button onclick="importarCodigo()" class="action-btn" style="flex:1; background:var(--type-dark); color:#fff; border:none; padding:10px;">📥 IMPORTAR</button>
+            </div>
+          </div>
+          
+          <div class="setting-card">
+            <div class="glass-bg liquid-glass"></div>
+            <h4>Visual e Tema</h4>
+            <div class="setting-item">
+              <span class="setting-label">Sprites</span>
+              <select id="setting-spritestyle" class="modal-select" onchange="saveSettings()"><option value="official" selected>4K Oficial</option><option value="animated">Animado (Pixel)</option></select>
+            </div>
+            <div class="setting-item">
+              <span class="setting-label">Tema de Cores</span>
+              <select id="setting-theme" class="modal-select" onchange="saveSettings()"><option value="auto">Automático</option><option value="light">Forçar Claro</option><option value="dark">Forçar Escuro</option></select>
+            </div>
+            <div class="setting-item">
+              <span class="setting-label">Modo P/B</span>
+              <label class="switch"><input type="checkbox" id="setting-monochrome" onchange="saveSettings()"><span class="slider"></span></label>
+            </div>
+            <div class="setting-item">
+              <span class="setting-label">Efeitos de Vidro</span>
+              <label class="switch"><input type="checkbox" id="setting-glass" onchange="saveSettings()" checked><span class="slider"></span></label>
+            </div>
+          </div>
+          
+          <div class="setting-card">
+            <div class="glass-bg liquid-glass"></div>
+            <h4>Interface e Info</h4>
+            <div class="setting-item">
+              <span class="setting-label">Gráfico (Status)</span>
+              <select id="setting-chart" class="modal-select" onchange="saveSettings()"><option value="bar" selected>Barras</option><option value="radar">Teia (Radar)</option></select>
+            </div>
+            <div class="setting-item">
+              <span class="setting-label">Tamanho da Fonte</span>
+              <select id="setting-fontsize" class="modal-select" onchange="saveSettings()"><option value="small">Pequena</option><option value="normal" selected>Normal</option><option value="large">Grande</option></select>
+            </div>
+            <div class="setting-item">
+              <span class="setting-label">Sistema de Medidas</span>
+              <select id="setting-units" class="modal-select" onchange="saveSettings()"><option value="metric" selected>Métrico</option><option value="imperial">Imperial</option></select>
+            </div>
+            <div class="setting-item">
+              <span class="setting-label">Ocultar Extras</span>
+              <label class="switch"><input type="checkbox" id="setting-extra" onchange="saveSettings()" checked><span class="slider"></span></label>
+            </div>
+          </div>
 
-      <div class="setting-group">
-        <h4>Visual e Efeitos</h4>
-        <div class="setting-item">
-          <span class="setting-label">Estilo de Imagem Principal</span>
-          <select id="setting-spritestyle" class="modal-select" onchange="saveSettings()">
-            <option value="official" selected>4K Oficial</option>
-            <option value="animated">Animado (Pixel Art)</option>
-          </select>
-        </div>
-        <div class="setting-item">
-          <span class="setting-label">Gráfico de Status</span>
-          <select id="setting-chart" class="modal-select" onchange="saveSettings()">
-            <option value="bar" selected>Barras</option>
-            <option value="radar">Teia (Radar)</option>
-          </select>
-        </div>
-        <div class="setting-item">
-          <span class="setting-label">Tema Visual</span>
-          <select id="setting-theme" class="modal-select" onchange="saveSettings()">
-            <option value="auto">Automático</option>
-            <option value="light">Forçar Claro</option>
-            <option value="dark">Forçar Escuro</option>
-          </select>
-        </div>
-        <div class="setting-item">
-          <span class="setting-label">Modo Monocromático</span>
-          <label class="switch"><input type="checkbox" id="setting-monochrome" onchange="saveSettings()"><span class="slider"></span></label>
-        </div>
-        <div class="setting-item">
-          <span class="setting-label">Tamanho da Fonte</span>
-          <select id="setting-fontsize" class="modal-select" onchange="saveSettings()">
-            <option value="small">Pequena</option>
-            <option value="normal" selected>Normal</option>
-            <option value="large">Grande</option>
-          </select>
-        </div>
-        <div class="setting-item">
-          <span class="setting-label">Efeito de Vidro (Blur)</span>
-          <label class="switch"><input type="checkbox" id="setting-glass" onchange="saveSettings()" checked><span class="slider"></span></label>
-        </div>
-        <div class="setting-item">
-          <span class="setting-label">Efeitos de Brilho (Glow)</span>
-          <label class="switch"><input type="checkbox" id="setting-glow" onchange="saveSettings()" checked><span class="slider"></span></label>
-        </div>
-        <div class="setting-item">
-          <span class="setting-label">Animação de Flutuação</span>
-          <label class="switch"><input type="checkbox" id="setting-anim" onchange="saveSettings()" checked><span class="slider"></span></label>
-        </div>
-      </div>
+          <div class="setting-card">
+            <div class="glass-bg liquid-glass"></div>
+            <h4>Sistema</h4>
+            <div class="setting-item">
+              <span class="setting-label">Início Automático</span>
+              <select id="setting-startup" class="modal-select" onchange="saveSettings()"><option value="random" selected>Aleatório</option><option value="grid">Grade Completa</option></select>
+            </div>
+            <button onclick="resetPokedex()" class="action-btn" style="width:100%; margin-top:15px; background:#ff4757; color:#fff; border:none; padding:12px;">⚠️ ZERAR POKÉDEX</button>
+            <div style="font-size: 9px; text-align:center; opacity:0.6; margin-top:5px;">Isso apaga seus times, capturados e configs!</div>
+          </div>
 
-      <div class="setting-group">
-        <h4>Dados e Sistema</h4>
-        <div class="setting-item">
-          <span class="setting-label">Sistema de Medidas</span>
-          <select id="setting-units" class="modal-select" onchange="saveSettings()">
-            <option value="metric" selected>Métrico (m/kg)</option>
-            <option value="imperial">Imperial (ft/lbs)</option>
-          </select>
-        </div>
-        <div class="setting-item">
-          <span class="setting-label">Tela Inicial</span>
-          <select id="setting-startup" class="modal-select" onchange="saveSettings()">
-            <option value="random" selected>Aleatório</option>
-            <option value="grid">Grade Completa</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="setting-group">
-        <h4>Ocultar/Mostrar Seções</h4>
-        <div class="setting-item">
-          <span class="setting-label">Atributos Base</span>
-          <label class="switch"><input type="checkbox" id="setting-stats" onchange="saveSettings()" checked><span class="slider"></span></label>
-        </div>
-        <div class="setting-item">
-          <span class="setting-label">Movimentos (Moves)</span>
-          <label class="switch"><input type="checkbox" id="setting-moves" onchange="saveSettings()" checked><span class="slider"></span></label>
-        </div>
-        <div class="setting-item">
-          <span class="setting-label">Dados Extra (Captura, Fraquezas)</span>
-          <label class="switch"><input type="checkbox" id="setting-extra" onchange="saveSettings()" checked><span class="slider"></span></label>
-        </div>
-        <div class="setting-item">
-          <span class="setting-label">Evoluções e Formas Alt.</span>
-          <label class="switch"><input type="checkbox" id="setting-evo" onchange="saveSettings()" checked><span class="slider"></span></label>
-        </div>
       </div>
     </div>
   </div>
@@ -788,6 +739,24 @@
             let audio = new Audio(currentPokemonData.cries.latest);
             audio.volume = 0.4;
             audio.play();
+        }
+    }
+
+    // NAVEGAÇÃO DE POKÉMON (NOVA FUNÇÃO)
+    function navigatePoke(direction) {
+        if (!currentPokemonData) return;
+        let nextId = parseInt(currentPokemonData.id) + direction;
+        if (nextId < 1) nextId = 1025; // Loop para o final
+        if (nextId > 1025) nextId = 1; // Loop para o inicio
+        document.getElementById('search-input').value = '';
+        fetchPokemon(nextId);
+    }
+
+    // RESETAR DADOS (NOVA FUNÇÃO)
+    function resetPokedex() {
+        if(confirm("ATENÇÃO: Você tem certeza que deseja APAGAR todas as configurações, favoritos e equipe salvos neste dispositivo? Esta ação não tem volta.")) {
+            localStorage.clear();
+            location.reload();
         }
     }
 
