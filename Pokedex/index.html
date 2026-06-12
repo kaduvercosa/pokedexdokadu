@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MASTERDEX ULTRA v1.1.5</title>
+  <title>MASTERDEX ULTRA v1.1.5.1</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -64,7 +64,7 @@
       background: var(--glass-bg); backdrop-filter: blur(10px) saturate(100%) contrast(100%); -webkit-backdrop-filter: blur(10px) saturate(100%) contrast(100%); border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4) inset, 0 0 0 1px rgba(255, 255, 255, 0.4), 0 8px 32px rgba(0, 0, 0, 0.25); 
     }
     
-    /* OVERRIDES DE SETTINGS */
+    /* SETTINGS OVERRIDES */
     body.no-glass .liquid-glass, body.no-glass .modal-content, body.no-glass #autocomplete-list { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: var(--glass-panel) !important; }
     body.no-glow #search-container::after, body.no-glow #main-card::after, body.no-glow .pokedex-card::after, body.no-glow .evo-card::after, body.no-glow .img-container::after { display: none !important; }
     body.no-anim * { animation: none !important; transition: none !important; }
@@ -98,7 +98,7 @@
     .close-btn:hover { background: #ff4757; color: white; border-color: #ff4757; transform: scale(1.1); }
     
     #details-modal .modal-content, #compare-modal .modal-content { max-width: 850px; }
-    #settings-modal .modal-content { max-width: 900px; } /* Ajuste pro Grid de Settings */
+    #settings-modal .modal-content { max-width: 900px; }
     
     #image-viewer-modal { align-items: center; padding: 0; overflow: hidden; z-index: 20000; }
     #image-viewer-modal .modal-overlay { z-index: 20000; }
@@ -171,7 +171,7 @@
       .btn-nav { flex: 1 1 100%; min-width: 100%; padding: 14px 10px; font-size: 13px; margin-top: 5px; }
     }
     @media (min-width: 1024px) {
-      .btn-nav { flex: 1 1 150px; min-width: 150px; margin-top: 0; } /* Entra na mesma linha no PC */
+      .btn-nav { flex: 1 1 150px; min-width: 150px; margin-top: 0; } 
     }
     
     #content-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; transition: opacity 0.3s ease; }
@@ -187,7 +187,7 @@
     #poke-image { width: clamp(220px, 60vw, 360px); height: clamp(220px, 60vw, 360px); object-fit: contain; margin-top: -80px; z-index: 10; animation: float 6s ease-in-out infinite; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)); cursor: pointer; }
     .card-content { width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
     
-    /* NAV ARROWS (Novo) */
+    /* NAV ARROWS */
     .name-wrapper { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 0; width: 100%; }
     .nav-arrow { background: var(--glass-panel); border: 1px solid var(--glass-border); color: var(--text-main); border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 0; }
     .nav-arrow:hover { background: var(--type-color); color: white; transform: scale(1.1); }
@@ -203,7 +203,7 @@
     .extra-title { font-size: 11px; color: var(--text-accent); text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 900; margin-bottom: 15px; letter-spacing: 1px; text-shadow: 0 1px 2px rgba(0,0,0,0.1); text-align: center; transition: color 0.6s ease; }
     .cap-label { font-size: 10px; color: var(--text-accent); text-transform: uppercase; font-weight: 900; margin-bottom: 2px; letter-spacing: 1px; transition: color 0.6s ease; }
     
-    /* Configurações Refeitas (Settings Grid) */
+    /* Configurações Grid */
     .settings-grid { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; }
     .setting-card { position: relative; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
     .setting-card > *:not(.glass-bg) { position: relative; z-index: 1; }
@@ -286,7 +286,7 @@
       #main-card { display: grid; grid-template-columns: 45% 1fr; grid-template-rows: auto auto; column-gap: 40px; row-gap: 30px; padding: 50px 40px; max-width: 1000px; margin-top: 20px; }
       .img-container { width: 100%; grid-column: 1; grid-row: 1; position: relative; top: auto;  }
       
-      .extra-info-container { width: 100%; grid-column: 1; grid-row: 2; margin-top: 0; align-self: start; } /* Ajustado de 'end' para 'start' para melhor fluidez */
+      .extra-info-container { width: 100%; grid-column: 1; grid-row: 2; margin-top: 0; align-self: start; } 
       
       #poke-image { margin-top: -20px; width: 100%; max-width: 380px; height: auto; object-fit: contain; }
       .card-content { width: 100%; grid-column: 2; grid-row: 1 / span 2; align-items: flex-start; text-align: left; }
@@ -301,7 +301,6 @@
       .full-width { grid-column: span 3; }
       .grid-container { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
       
-      /* Grid de Settings no PC fica em 2 colunas */
       .settings-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
@@ -380,7 +379,7 @@
       <div id="main-card">
         <div class="glass-bg liquid-glass"></div>
         <div class="img-container">
-           <img id="poke-image" src="" alt="" onclick="openDetailsModal()" title="Clique para ver mais detalhes!" onerror="if(spriteStyle==='animated'){ this.onerror=null; this.src=getMainSpriteUrl(currentPokemonData, isShinyView); }">
+           <img id="poke-image" src="" alt="" onclick="openDetailsModal()" title="Clique para ver mais detalhes!" onerror="if(spriteStyle==='home'){ this.onerror=null; this.src=getMainSpriteUrl(currentPokemonData, isShinyView); }">
         </div>
         <div class="card-content">
           <div class="name-wrapper">
@@ -576,7 +575,7 @@
             <h4>Visual e Tema</h4>
             <div class="setting-item">
               <span class="setting-label">Sprites</span>
-              <select id="setting-spritestyle" class="modal-select" onchange="saveSettings()"><option value="official" selected>4K Oficial</option><option value="animated">Animado (Pixel)</option></select>
+              <select id="setting-spritestyle" class="modal-select" onchange="saveSettings()"><option value="official" selected>4K Oficial</option><option value="home">Home 3D</option></select>
             </div>
             <div class="setting-item">
               <span class="setting-label">Tema de Cores</span>
@@ -683,10 +682,10 @@
 
     function getMainSpriteUrl(pokemonData, isShiny) {
         if (!pokemonData || !pokemonData.sprites) return '';
-        if (spriteStyle === 'animated') {
+        if (spriteStyle === 'home') {
             return isShiny ? 
-                (pokemonData.sprites.other?.showdown?.front_shiny || pokemonData.sprites.front_shiny) : 
-                (pokemonData.sprites.other?.showdown?.front_default || pokemonData.sprites.front_default);
+                (pokemonData.sprites.other?.home?.front_shiny || pokemonData.sprites.front_shiny) : 
+                (pokemonData.sprites.other?.home?.front_default || pokemonData.sprites.front_default);
         } else {
             return isShiny ? 
                 (pokemonData.sprites.other['official-artwork'].front_shiny || pokemonData.sprites.front_shiny) : 
@@ -742,17 +741,15 @@
         }
     }
 
-    // NAVEGAÇÃO DE POKÉMON (NOVA FUNÇÃO)
     function navigatePoke(direction) {
         if (!currentPokemonData) return;
         let nextId = parseInt(currentPokemonData.id) + direction;
-        if (nextId < 1) nextId = 1025; // Loop para o final
-        if (nextId > 1025) nextId = 1; // Loop para o inicio
+        if (nextId < 1) nextId = 1025;
+        if (nextId > 1025) nextId = 1; 
         document.getElementById('search-input').value = '';
         fetchPokemon(nextId);
     }
 
-    // RESETAR DADOS (NOVA FUNÇÃO)
     function resetPokedex() {
         if(confirm("ATENÇÃO: Você tem certeza que deseja APAGAR todas as configurações, favoritos e equipe salvos neste dispositivo? Esta ação não tem volta.")) {
             localStorage.clear();
@@ -1757,7 +1754,9 @@
         const s = JSON.parse(saved);
         
         if (document.getElementById('setting-theme')) {
-            document.getElementById('setting-spritestyle').value = s.spritestyle || 'official';
+            let savedSprite = s.spritestyle || 'official';
+            if(savedSprite === 'animated') savedSprite = 'home';
+            document.getElementById('setting-spritestyle').value = savedSprite;
             document.getElementById('setting-theme').value = s.theme || 'auto';
             document.getElementById('setting-monochrome').checked = s.monochrome || false;
             document.getElementById('setting-fontsize').value = s.fontsize || 'normal';
@@ -1774,7 +1773,7 @@
         }
         
         isImperial = s.units === 'imperial';
-        spriteStyle = s.spritestyle || 'official';
+        spriteStyle = s.spritestyle === 'animated' ? 'home' : (s.spritestyle || 'official');
 
         if (s.theme === 'auto' || !s.theme) { document.documentElement.removeAttribute('data-theme'); }
         else { document.documentElement.setAttribute('data-theme', s.theme); }
